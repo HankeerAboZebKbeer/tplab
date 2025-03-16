@@ -40,10 +40,13 @@
 
       // Listen for the "F" key press to toggle fullscreen
       window.addEventListener("keydown", (event) => {
-        if (event.key === "f" || event.key === "F") {
-          toggleFullscreen();
-        }
-      });
+  const activeElement = document.activeElement;
+  const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+  
+  if (!isInputField && (event.key === "f" || event.key === "F")) {
+    toggleFullscreen();
+  }
+});
     </script>
   </body>
 </html>
