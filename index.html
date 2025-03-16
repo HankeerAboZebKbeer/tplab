@@ -8,42 +8,45 @@
   </head>
   <body>
     <div id="root"></div>
-
-
+    <script type="module" src="/src/main.jsx"></script>
 
     <script>
+      // Fullscreen Toggle Function
       const toggleFullscreen = () => {
         const container = document.documentElement; // Full page container
 
         if (!document.fullscreenElement) {
-          container.requestFullscreen().then(() => {
-            if (screen.orientation && screen.orientation.lock) {
-              screen.orientation.lock('landscape'); // Lock to landscape on fullscreen
-            }
-          }).catch(err => {
-            console.log("Fullscreen failed:", err);
-          });
+          if (container.requestFullscreen) {
+            container.requestFullscreen();
+          } else if (container.mozRequestFullScreen) { // Firefox
+            container.mozRequestFullScreen();
+          } else if (container.webkitRequestFullscreen) { // Chrome, Safari
+            container.webkitRequestFullscreen();
+          } else if (container.msRequestFullscreen) { // IE/Edge
+            container.msRequestFullscreen();
+          }
         } else {
-          document.exitFullscreen();
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) { // Chrome, Safari
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+          }
         }
       };
 
-      // Handle Desktop Fullscreen Button
-      document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
-
-      // Handle Double Tap for Mobile Fullscreen
-      let lastTap = 0;
-
-      document.addEventListener("touchend", () => {
-        const now = new Date().getTime();
-        const timeSinceLastTap = now - lastTap;
-
-        if (timeSinceLastTap < 300) { // Double tap detected
-          toggleFullscreen();
-        }
-
-        lastTap = now;
-      });
+      // Listen for the "F" key press to toggle fullscreen
+    window.addEventListener("keydown", (event) => {
+  const activeElement = document.activeElement;
+  const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+  
+  if (!isInputField && (event.key === "f" || event.key === "F")) {
+    toggleFullscreen();
+  }
+});
     </script>
   </body>
 </html>
