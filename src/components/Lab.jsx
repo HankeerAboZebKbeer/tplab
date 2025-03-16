@@ -26,7 +26,7 @@ export const RiveDemo = () => {
     src: "teleport_labs_vector.riv", // Path to your Rive file
     stateMachines: "Main SM", // State machine controlling animation
     layout: new Layout({
-      fit: Fit.Contain,
+      fit: Fit.Cover,
       alignment: Alignment.Center,
     }),
 
