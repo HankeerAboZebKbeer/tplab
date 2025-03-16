@@ -6,7 +6,7 @@ import {
   Alignment,
   decodeImage,
   decodeFont,
-} from "@rive-app/react-canvas";
+} from "@rive-app/react-webgl2"; // Updated import for WebGL2
 
 // Image paths
 const imagePaths = {
@@ -23,15 +23,15 @@ const audioPaths = {
 
 export const RiveDemo = () => {
   const { RiveComponent } = useRive({
-    src: "teleport_labs_vector.riv",
-    stateMachines: "Main SM",
+    src: "teleport_labs_vector.riv", // Path to your Rive file
+    stateMachines: "Main SM", // State machine controlling animation
     layout: new Layout({
       fit: Fit.Contain,
       alignment: Alignment.Center,
     }),
 
-    autoplay: true,
-    assetLoader: loadAllAssets, //Load images, fonts, and audio
+    autoplay: true, // Automatically start the animation
+    assetLoader: loadAllAssets, // Load images, fonts, and audio
   });
 
   return (
