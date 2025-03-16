@@ -9,6 +9,8 @@
   <body>
     <div id="root"></div>
 
+
+
     <script>
       const toggleFullscreen = () => {
         const container = document.documentElement; // Full page container
@@ -25,6 +27,9 @@
           document.exitFullscreen();
         }
       };
+
+      // Handle Desktop Fullscreen Button
+      document.getElementById("fullscreen-btn").addEventListener("click", toggleFullscreen);
 
       // Handle Double Tap for Mobile Fullscreen
       let lastTap = 0;
