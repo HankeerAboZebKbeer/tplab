@@ -48,10 +48,12 @@
         }
       });
 
-      // Handle Double Tap for Mobile Fullscreen
+      // Handle Double Tap for Mobile Fullscreen (Only for Rive Animation)
       let lastTap = 0;
 
-      document.addEventListener("touchend", () => {
+      const rivElement = document.querySelector("canvas");
+
+      rivElement?.addEventListener("touchend", () => {
         const now = new Date().getTime();
         const timeSinceLastTap = now - lastTap;
 
