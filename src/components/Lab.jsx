@@ -23,7 +23,7 @@ const audioPaths = {
 
 export const RiveDemo = () => {
   const { RiveComponent } = useRive({
-    src: "teleport_labs_vector (2).riv", // Path to your Rive file
+    src: "teleport_labs_vector (3).riv", // Path to your Rive file
     stateMachines: "Main SM", // State machine controlling animation
     layout: new Layout({
       fit: Fit.Cover,
