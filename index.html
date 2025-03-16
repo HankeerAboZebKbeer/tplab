@@ -52,7 +52,7 @@
         }
       });
 
-      // Double tap event listener
+      // Double tap for mobile
       let lastTap = 0;
       document.addEventListener("touchend", (event) => {
         if (rivContainer && rivContainer.contains(event.target)) {
@@ -62,6 +62,15 @@
             toggleFullscreen();
           }
           lastTap = now;
+        }
+      });
+
+      // 'F' key for desktop
+      window.addEventListener("keydown", (event) => {
+        const activeElement = document.activeElement;
+        const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+        if (!isInputField && (event.key === "f" || event.key === "F")) {
+          toggleFullscreen();
         }
       });
     </script>
