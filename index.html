@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <script>
+      // Fullscreen Toggle Function
+      const toggleFullscreen = () => {
+        const container = document.documentElement; // Full page container
+
+        if (!document.fullscreenElement) {
+          if (container.requestFullscreen) {
+            container.requestFullscreen();
+          } else if (container.mozRequestFullScreen) { // Firefox
+            container.mozRequestFullScreen();
+          } else if (container.webkitRequestFullscreen) { // Chrome, Safari
+            container.webkitRequestFullscreen();
+          } else if (container.msRequestFullscreen) { // IE/Edge
+            container.msRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          } else if (document.mozCancelFullScreen) { // Firefox
+            document.mozCancelFullScreen();
+          } else if (document.webkitExitFullscreen) { // Chrome, Safari
+            document.webkitExitFullscreen();
+          } else if (document.msExitFullscreen) { // IE/Edge
+            document.msExitFullscreen();
+          }
+        }
+      };
+
+      // Listen for the "F" key press to toggle fullscreen
+      window.addEventListener("keydown", (event) => {
+        if (event.key === "f" || event.key === "F") {
+          toggleFullscreen();
+        }
+      });
+    </script>
+  </body>
+</html>
