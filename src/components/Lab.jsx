@@ -55,7 +55,7 @@ const loadAllAssets = async (asset, bytes) => {
   }
 
   if (asset.isFont) {
-    const fontUrl = "/fonts/inter-594377.ttf";
+    const fontUrl = "/fonts/Inter-594377.ttf";
     const res = await fetch(fontUrl);
     const fontBuffer = await res.arrayBuffer();
     const font = await decodeFont(new Uint8Array(fontBuffer));
