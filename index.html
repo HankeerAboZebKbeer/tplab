@@ -8,33 +8,31 @@
   </head>
   <body>
     <div id="root"></div>
+
+    <!-- Invisible video for iOS fullscreen workaround -->
+    <video id="iosFullscreenHack" playsinline muted style="position: fixed; width: 1px; height: 1px; opacity: 0;"></video>
+
     <script type="module" src="/src/main.jsx"></script>
 
     <script>
-      // Fullscreen Toggle Function
       const toggleFullscreen = () => {
-        const container = document.documentElement; // Full page container
+        const container = document.querySelector(".RiveContainer");
+        const iosVideo = document.getElementById("iosFullscreenHack");
 
-        if (!document.fullscreenElement) {
-          container.requestFullscreen().catch(err => console.log("Fullscreen failed:", err));
+        if (navigator.userAgent.match(/(iPhone|iPad|iPod)/i)) {
+          iosVideo.play();
+          iosVideo.requestFullscreen();
         } else {
-          document.exitFullscreen();
+          if (!document.fullscreenElement) {
+            container.requestFullscreen().catch(err => console.log("Fullscreen failed:", err));
+          } else {
+            document.exitFullscreen();
+          }
         }
       };
 
-      // Listen for the "F" key press to toggle fullscreen
-      window.addEventListener("keydown", (event) => {
-        const activeElement = document.activeElement;
-        const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
-
-        if (!isInputField && (event.key === "f" || event.key === "F")) {
-          toggleFullscreen();
-        }
-      });
-
-      // Handle Double Tap for Mobile Fullscreen (Only for Rive Container)
+      // Handle Double Tap for Mobile Fullscreen
       let lastTap = 0;
-
       document.addEventListener("touchend", (event) => {
         const rivContainer = document.querySelector(".RiveContainer");
 
