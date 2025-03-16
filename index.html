@@ -39,14 +39,28 @@
       };
 
       // Listen for the "F" key press to toggle fullscreen
-    window.addEventListener("keydown", (event) => {
-  const activeElement = document.activeElement;
-  const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
-  
-  if (!isInputField && (event.key === "f" || event.key === "F")) {
-    toggleFullscreen();
-  }
-});
+      window.addEventListener("keydown", (event) => {
+        const activeElement = document.activeElement;
+        const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+
+        if (!isInputField && (event.key === "f" || event.key === "F")) {
+          toggleFullscreen();
+        }
+      });
+
+      // Handle Double Tap for Mobile Fullscreen
+      let lastTap = 0;
+
+      document.addEventListener("touchend", () => {
+        const now = new Date().getTime();
+        const timeSinceLastTap = now - lastTap;
+
+        if (timeSinceLastTap < 300) { // Double tap detected
+          toggleFullscreen();
+        }
+
+        lastTap = now;
+      });
     </script>
   </body>
 </html>
