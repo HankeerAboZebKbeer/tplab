@@ -16,25 +16,9 @@
         const container = document.documentElement; // Full page container
 
         if (!document.fullscreenElement) {
-          if (container.requestFullscreen) {
-            container.requestFullscreen();
-          } else if (container.mozRequestFullScreen) { // Firefox
-            container.mozRequestFullScreen();
-          } else if (container.webkitRequestFullscreen) { // Chrome, Safari
-            container.webkitRequestFullscreen();
-          } else if (container.msRequestFullscreen) { // IE/Edge
-            container.msRequestFullscreen();
-          }
+          container.requestFullscreen().catch(err => console.log("Fullscreen failed:", err));
         } else {
-          if (document.exitFullscreen) {
-            document.exitFullscreen();
-          } else if (document.mozCancelFullScreen) { // Firefox
-            document.mozCancelFullScreen();
-          } else if (document.webkitExitFullscreen) { // Chrome, Safari
-            document.webkitExitFullscreen();
-          } else if (document.msExitFullscreen) { // IE/Edge
-            document.msExitFullscreen();
-          }
+          document.exitFullscreen();
         }
       };
 
@@ -48,20 +32,22 @@
         }
       });
 
-      // Handle Double Tap for Mobile Fullscreen (Only for Rive Animation)
+      // Handle Double Tap for Mobile Fullscreen (Only for Rive Container)
       let lastTap = 0;
 
-      const rivElement = document.querySelector("canvas");
+      document.addEventListener("touchend", (event) => {
+        const rivContainer = document.querySelector(".RiveContainer");
 
-      rivElement?.addEventListener("touchend", () => {
-        const now = new Date().getTime();
-        const timeSinceLastTap = now - lastTap;
+        if (rivContainer && rivContainer.contains(event.target)) {
+          const now = new Date().getTime();
+          const timeSinceLastTap = now - lastTap;
 
-        if (timeSinceLastTap < 300) { // Double tap detected
-          toggleFullscreen();
+          if (timeSinceLastTap < 300) { // Double tap detected
+            toggleFullscreen();
+          }
+
+          lastTap = now;
         }
-
-        lastTap = now;
       });
     </script>
   </body>
