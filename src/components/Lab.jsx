@@ -27,7 +27,7 @@ export const RiveDemo = () => {
     stateMachines: "Main SM", // State machine controlling animation
     layout: new Layout({
       fit: Fit.Cover,
-      alignment: Alignment.Center,
+      alignment: Alignment.CenterLeft,
     }),
 
     autoplay: true, // Automatically start the animation
