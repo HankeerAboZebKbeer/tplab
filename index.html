@@ -5,72 +5,48 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React</title>
-    <style>
-      .ios-fullscreen {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 9999;
-        background-color: black;
-      }
-    </style>
   </head>
   <body>
     <div id="root"></div>
-
-    <!-- Hidden video for iOS fullscreen trick -->
-    <video id="iosFullscreenHack" playsinline muted style="display: none;"></video>
-
     <script type="module" src="/src/main.jsx"></script>
 
     <script>
-      const rivContainer = document.querySelector(".RiveContainer");
-      const iosVideo = document.getElementById("iosFullscreenHack");
-
-      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-
+      // Fullscreen Toggle Function
       const toggleFullscreen = () => {
-        if (isIOS) {
-          iosVideo.play();
-          iosVideo.requestFullscreen();
-          rivContainer.classList.add("ios-fullscreen");
+        const container = document.documentElement; // Full page container
+
+        if (!document.fullscreenElement) {
+          container.requestFullscreen().catch(err => console.log("Fullscreen failed:", err));
         } else {
-          if (!document.fullscreenElement) {
-            rivContainer.requestFullscreen();
-          } else {
-            document.exitFullscreen();
-          }
+          document.exitFullscreen();
         }
       };
 
-      // Remove fullscreen class when iOS exits fullscreen
-      document.addEventListener("fullscreenchange", () => {
-        if (!document.fullscreenElement) {
-          rivContainer.classList.remove("ios-fullscreen");
-        }
-      });
-
-      // Double tap for mobile
-      let lastTap = 0;
-      document.addEventListener("touchend", (event) => {
-        if (rivContainer && rivContainer.contains(event.target)) {
-          const now = new Date().getTime();
-          const timeSinceLastTap = now - lastTap;
-          if (timeSinceLastTap < 300) {
-            toggleFullscreen();
-          }
-          lastTap = now;
-        }
-      });
-
-      // 'F' key for desktop
+      // Listen for the "F" key press to toggle fullscreen
       window.addEventListener("keydown", (event) => {
         const activeElement = document.activeElement;
         const isInputField = activeElement.tagName === "INPUT" || activeElement.tagName === "TEXTAREA";
+
         if (!isInputField && (event.key === "f" || event.key === "F")) {
           toggleFullscreen();
+        }
+      });
+
+      // Handle Double Tap for Mobile Fullscreen (Only for Rive Container)
+      let lastTap = 0;
+
+      document.addEventListener("touchend", (event) => {
+        const rivContainer = document.querySelector(".RiveContainer");
+
+        if (rivContainer && rivContainer.contains(event.target)) {
+          const now = new Date().getTime();
+          const timeSinceLastTap = now - lastTap;
+
+          if (timeSinceLastTap < 300) { // Double tap detected
+            toggleFullscreen();
+          }
+
+          lastTap = now;
         }
       });
     </script>
